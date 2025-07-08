@@ -121,6 +121,8 @@ const TourCard = ({ tour }: { tour: Tour }) => {
 const FeaturedTours = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [visibleTours, setVisibleTours] = useState(3);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [pendingSlide, setPendingSlide] = useState<number | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -138,22 +140,45 @@ const FeaturedTours = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Animation logic
+  const triggerSlide = (next: number) => {
+    setIsTransitioning(true);
+    setPendingSlide(next);
+  };
+
+  const maxSlide = visibleTours === 1 ? featuredTours.length : featuredTours.length - visibleTours + 1;
   const nextSlide = () => {
-    setCurrentSlide((prev) => 
-      prev + visibleTours >= featuredTours.length ? 0 : prev + 1
-    );
+    setCurrentSlide((prev) => (prev + 1) % maxSlide);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => 
-      prev === 0 ? Math.max(0, featuredTours.length - visibleTours) : prev - 1
-    );
+    setCurrentSlide((prev) => (prev - 1 + maxSlide) % maxSlide);
   };
+
+  useEffect(() => {
+    if (currentSlide > featuredTours.length - 1) {
+      setCurrentSlide(0);
+    }
+  }, [visibleTours, currentSlide]);
 
   useEffect(() => {
     const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
-  }, [visibleTours]);
+  }, [visibleTours, currentSlide]);
+
+  // Handle end of transition
+  useEffect(() => {
+    if (isTransitioning) {
+      const timeout = setTimeout(() => {
+        if (pendingSlide !== null) {
+          setCurrentSlide(pendingSlide);
+          setPendingSlide(null);
+        }
+        setIsTransitioning(false);
+      }, 400); // duration matches CSS
+      return () => clearTimeout(timeout);
+    }
+  }, [isTransitioning, pendingSlide]);
 
   return (
     <section className="py-20 bg-gradient-to-br from-gray-50 to-orange-50 relative overflow-hidden">
@@ -182,39 +207,66 @@ const FeaturedTours = () => {
 
         {/* Tours Grid */}
         <div className="relative mb-12">
-          <div className="overflow-hidden">
-        <div 
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ 
-            transform: `translateX(-${currentSlide * (100 / visibleTours)}%)`,
-            width: `${(featuredTours.length / visibleTours) * 100}%`
-          }}
-        >
-          {featuredTours.map((tour) => (
-            <div 
-          key={tour.id} 
-          className="px-3" 
-          style={{ width: `${100 / featuredTours.length}%` }}
+          <div className="overflow-hidden w-full">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${currentSlide * (100 / visibleTours)}%)`
+              }}
             >
-          <TourCard tour={tour} />
+              {featuredTours.map((tour) => (
+                <div
+                  key={tour.id}
+                  className="flex-shrink-0"
+                  style={{
+                    width: visibleTours === 1
+                      ? '100%'
+                      : visibleTours === 2
+                        ? '50%'
+                        : '33.3333%'
+                  }}
+                >
+                  <div className="p-3 h-full flex flex-col">
+                    <TourCard tour={tour} />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-center mt-8 space-x-4">
+            <button
+              onClick={prevSlide}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-orange-500 hover:text-white transition-all duration-300"
+              aria-label="Previous"
+              disabled={isTransitioning}
+            >
+              <ArrowRight className="w-5 h-5 rotate-180" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 hover:bg-orange-500 hover:text-white transition-all duration-300"
+              aria-label="Next"
+              disabled={isTransitioning}
+            >
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Navigation Dots */}
-          <div className="flex justify-center mt-8 space-x-2">
-        {Array.from({ length: Math.ceil(featuredTours.length / visibleTours) }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-          Math.floor(currentSlide / visibleTours) === index 
-            ? 'bg-gradient-to-r from-orange-500 to-amber-600 w-8' 
-            : 'bg-gray-300 hover:bg-gray-400'
-            }`}
-          />
-        ))}
+          <div className="flex justify-center mt-4 space-x-2">
+            {Array.from({ length: visibleTours === 1 ? featuredTours.length : featuredTours.length - visibleTours + 1 }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  currentSlide === index
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-600 w-8' 
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+              />
+            ))}
           </div>
         </div>
        
