@@ -133,7 +133,7 @@ const TourDetails = () => {
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <Link 
-              to="/tours"
+              to={`/tours?city=${encodeURIComponent(tour.city)}`}
               className="inline-flex items-center text-white hover:text-orange-300 transition-colors mb-4 drop-shadow-lg"
             >
               <ArrowLeft className="w-5 h-5 mr-2" />

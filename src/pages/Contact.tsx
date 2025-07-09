@@ -98,7 +98,7 @@ Message: ${formData.message}`;
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-800 mb-2">Email</h3>
-                    <p className="text-lg text-gray-700 font-semibold">info@goldenphoenix.com</p>
+                    <p className="text-lg text-gray-700 font-semibold">info@goldenphoenixtravel.com</p>
                     <p className="text-sm text-gray-500 flex items-center mt-1">
                       <Clock className="w-4 h-4 mr-2" />
                       We'll respond within 24 hours

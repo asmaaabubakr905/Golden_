@@ -2,10 +2,24 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Filter, Search, MapPin, Clock, Star, Users, Calendar, Heart, Share2, ArrowRight, Sparkles } from 'lucide-react';
 import TourCard from '../components/TourCard';
 import { tours, cities, getToursByCity } from '../data/tours';
+import { useLocation } from 'react-router-dom';
 // import { Helmet } from 'react-helmet';
 
 const Tours = () => {
-  const [selectedCity, setSelectedCity] = useState('All');
+  const location = useLocation();
+  const getInitialCity = () => {
+    const params = new URLSearchParams(location.search);
+    const city = params.get('city');
+    return city && cities.includes(city) ? city : 'All';
+  };
+  const [selectedCity, setSelectedCity] = useState(getInitialCity());
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const city = params.get('city');
+    if (city && cities.includes(city)) {
+      setSelectedCity(city);
+    }
+  }, [location.search]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);

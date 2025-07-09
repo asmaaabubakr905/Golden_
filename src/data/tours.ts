@@ -1,5 +1,5 @@
 import img1 from '../assets/abusimble aswan main image.jpg';
-import img2 from '../assets/nile cruise.jpg';
+import img2 from '../assets/falouka aswan.jpg';
 import img3 from '../assets/nubian-village.jpg';
 import img4 from '../assets/philae-temple,-philae-island.jpg';
 import img5 from '../assets/high-dam-aswan-webp.webp';
@@ -8,6 +8,7 @@ import img7 from '../assets/273ae4b9-62f0-4fa2-a7a5-9b32d249b74a_karnak-temple-e
 import img8 from '../assets/alex.jpeg';
 import img9 from '../assets/Egyptian-Museum-and-Old-Cairo-TOur-1.webp';
 import img10 from '../assets/pyramids.jpg';
+import img11 from '../assets/fluca luxor.jpg';
 export interface Tour {
   id: string;
   title: string;
@@ -218,7 +219,7 @@ export const tours: Tour[] = [
     title: 'Aswan High Dam ',
     description: 'Discover modern engineering marvels and ancient temples relocated to save them from rising waters.',
     image: img5,
-    price: 85,
+    price: 40,
     duration: '6 hours',
     location: 'Aswan',
     city: 'Aswan',
@@ -295,8 +296,8 @@ export const tours: Tour[] = [
     title: 'Nile Felucca Sunset Cruise',
     description: 'Enjoy a peaceful sailing experience on the Nile River aboard a traditional Egyptian sailboat.',
     image: img2,
-    price: 45,
-    duration: '3 hours',
+    price: 30,
+    duration: '1 hours',
     location: 'Aswan',
     city: 'Aswan',
     rating: 4.6,
@@ -305,7 +306,6 @@ export const tours: Tour[] = [
       'Afternoon pickup from hotel',
       'Board traditional felucca',
       'Sail around Elephantine Island',
-      'Visit Botanical Garden',
       'Enjoy refreshments on board',
       'Watch the sunset over the Nile',
       'Return to dock',
@@ -332,7 +332,7 @@ export const tours: Tour[] = [
     title: 'Philae Temple',
     description: 'Discover the ancient temple of Isis, dedicated to the goddess of fertility and motherhood.',
     image: img4,
-    price: 85,
+    price: 45,
     duration: '4 hours',
     location: 'Aswan',
     city: 'Aswan',
@@ -342,14 +342,12 @@ export const tours: Tour[] = [
       'Morning pickup from hotel',
       'Visit Philae Temple',
       'Explore Temple of Isis',
-      'Lunch at Nubian restaurant',
       'Return to hotel'
     ],
     includes: [
       'Hotel pickup and drop-off',
       'Professional tour guide',
       'Entrance fees to all sites',
-      'Lunch at Nubian restaurant',
       'Bottled water',
       'All taxes and service charges'
     ],
@@ -390,6 +388,43 @@ export const tours: Tour[] = [
       'Gratuities',
     ],
     fullDescription: 'Experience the perfect blend of ancient history and modern engineering in beautiful Aswan. Start with a visit to the impressive Aswan High Dam, one of the world\'s largest embankment dams, which created Lake Nasser and revolutionized agriculture in Egypt. Take a boat ride to Philae Temple, dedicated to the goddess Isis, which was carefully relocated stone by stone to save it from the rising waters of the Nile. The tour includes a visit to a traditional Nubian village where you can experience local culture and enjoy a peaceful felucca sailing experience on the Nile River.'
+  },
+  {
+    id: '11',
+    title: 'Nile Felucca Sunset Cruise',
+    description: 'Enjoy a peaceful sailing experience on the Nile River aboard a traditional Egyptian sailboat.',
+    image: img11,
+    price: 30,
+    duration: '1 hours',
+    location: 'Luxor',
+    city: 'Luxor',
+    rating: 4.9,
+    maxGuests: 8,
+    featured: true,
+    itinerary: [
+      'Afternoon pickup from hotel',
+      'Board traditional felucca',
+      'Sail around Elephantine Island',
+      'Enjoy refreshments on board',
+      'Watch the sunset over the Nile',
+      'Return to dock',
+      'Transfer back to hotel'
+    ],
+    includes: [
+      'Hotel pickup and drop-off',
+      'Professional boat captain',
+      'Felucca sailing experience',
+      'Refreshments (tea, coffee, soft drinks)',
+      'Entrance to Botanical Garden',
+      'All taxes and service charges'
+    ],
+    excludes: [
+      'Lunch or dinner',
+      'Personal expenses',
+      'Gratuities',
+      'Additional drinks'
+    ],
+    fullDescription: 'Experience the timeless beauty of the Nile River with a peaceful felucca sailing adventure. These traditional wooden sailboats have been used on the Nile for thousands of years and offer the perfect way to enjoy the river\'s serenity. Sail around the beautiful Elephantine Island, visit the lush Botanical Garden with its exotic plants and trees, and enjoy refreshments while taking in the stunning scenery. As the sun sets over the Nile, you\'ll understand why this river has been the lifeblood of Egypt for millennia. This relaxing experience is perfect for all ages and provides unforgettable photo opportunities.'
   },
 ];
 
