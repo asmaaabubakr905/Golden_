@@ -23,7 +23,6 @@ const Footer = () => {
               experiences across Cairo, Alexandria, Luxor, Aswan, and beyond. Your journey to 
               ancient civilizations starts here.
             </p>
-            <div className="text-gray-200 font-semibold mb-4">CEO: Amr Abouzied</div>
             <div className="flex space-x-4">
               <a
                 href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
@@ -66,6 +65,7 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-orange-500" />
                 <span className="text-gray-300">+20 150 700 0720</span>
+                <span className="text-gray-400 text-xs ml-2">CEO: Amr Abouzied</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-orange-500" />
