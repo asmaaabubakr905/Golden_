@@ -23,6 +23,7 @@ const Footer = () => {
               experiences across Cairo, Alexandria, Luxor, Aswan, and beyond. Your journey to 
               ancient civilizations starts here.
             </p>
+            <div className="text-gray-200 font-semibold mb-4">CEO: Amr Abouzied</div>
             <div className="flex space-x-4">
               <a
                 href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
