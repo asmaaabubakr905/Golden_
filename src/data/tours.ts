@@ -362,7 +362,7 @@ export const tours: Tour[] = [
     title: 'Nubian Village',
     description: 'Discover the traditional Nubian village of Aswan, known for its unique culture and traditional way of life.',
     image:  img3,
-    price: 85,
+    price: 45,
     duration: '4 hours',
     location: 'Aswan',
     city: 'Aswan',
