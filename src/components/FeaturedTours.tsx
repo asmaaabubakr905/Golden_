@@ -99,7 +99,7 @@ const TourCard = ({ tour }: { tour: Tour }) => {
         {/* Price & Button */}
         <div className="flex items-center justify-between">
           <div className="text-2xl font-bold text-orange-500">
-            ${tour.price}
+            {tour.special ? `${tour.price.toLocaleString()} EGP` : `$${tour.price}`}
             <span className="text-sm font-normal text-gray-500"> /person</span>
           </div>
           <Link

@@ -9,6 +9,7 @@ import img8 from '../assets/alex.jpeg';
 import img9 from '../assets/Egyptian-Museum-and-Old-Cairo-TOur-1.webp';
 import img10 from '../assets/pyramids.jpg';
 import img11 from '../assets/fluca luxor.jpg';
+import nubaImg from '../assets/Nuba.jpg';
 export interface Tour {
   id: string;
   title: string;
@@ -21,6 +22,7 @@ export interface Tour {
   rating: number;
   maxGuests: number;
   featured?: boolean;
+  special?: boolean;
   itinerary: string[];
   includes: string[];
   excludes: string[];
@@ -426,6 +428,74 @@ export const tours: Tour[] = [
     ],
     fullDescription: 'Experience the timeless beauty of the Nile River with a peaceful felucca sailing adventure. These traditional wooden sailboats have been used on the Nile for thousands of years and offer the perfect way to enjoy the river\'s serenity. Sail around the beautiful Elephantine Island, visit the lush Botanical Garden with its exotic plants and trees, and enjoy refreshments while taking in the stunning scenery. As the sun sets over the Nile, you\'ll understand why this river has been the lifeblood of Egypt for millennia. This relaxing experience is perfect for all ages and provides unforgettable photo opportunities.'
   },
+  {
+    id: '12',
+    title: 'Nuba Experience',
+    description: 'A unique Nubian experience on a traditional Dahabya - Discover authentic Nubian culture in an exceptional 4-day journey',
+    image: nubaImg,
+    price: 8500,
+    duration: '4 days',
+    location: 'Aswan',
+    city: 'Aswan',
+    rating: 5.0,
+    maxGuests: 16,
+    featured: true,
+    special: true,
+    itinerary: [
+      'Day 1',
+      'Train station pickup',
+      'Transfer to Dahabya',
+      'Snacks time on Dahabya',
+      'A visit to:',
+      '• The Nubian village',
+      '• Nubian souq',
+      '• Nubian school',
+      '• Learn about the culture of Nuba',
+      'Dinner on the Dahabya',
+      '',
+      'Day 2',
+      'Breakfast on the Dahabya',
+      'A visit to:',
+      '• The Temple of Isis, Hathor',
+      '• The Hi-Dam',
+      '• The Soviet Egyptian Friendship Symbol',
+      'Dinner on the Dahabya',
+      '',
+      'Day 3',
+      'Breakfast on the Dahabya',
+      'A visit to:',
+      '• The Botanical Garden',
+      '• Mafia Island',
+      '• Abu-Al Hawa Mountain',
+      '• Noble Tombs',
+      '• Kayak + Sandboarding (optional)',
+      'Dinner on the Dahabya',
+      '',
+      'Day 4',
+      'Abu-Simble Temple (optional)',
+      'Breakfast on the Dahabya',
+      'Free tour at Aswan Old Souq for shopping',
+      'Transfer to the train station'
+    ],
+    includes: [
+      'Hotel pickup and drop-off',
+      'Accommodation on Dahabya',
+      'All meals (breakfast, lunch, dinner)',
+      'Professional tour guide',
+      'All entrance fees',
+      'All transfers',
+      'Snacks and refreshments',
+      'All taxes and service charges'
+    ],
+    excludes: [
+      'Abu Simbel Temple (optional)',
+      'Kayak + Sandboarding (optional)',
+      'Personal expenses',
+      'Shopping at souqs',
+      'Gratuities'
+    ],
+    fullDescription: 'A unique Nubian experience on a traditional Dahabya - Discover authentic Nubian culture in an exceptional 4-day journey. Enjoy accommodation on the traditional Dahabya and explore Nubian villages and stunning archaeological sites in Aswan. This unique journey combines authentic Nubian culture with remarkable historical sites in an unforgettable trip.'
+  },
 ];
 
 export const cities = ['All', 'Cairo', 'Alexandria', 'Luxor', 'Aswan'];
@@ -434,3 +504,4 @@ export const getFeaturedTours = () => tours.filter(tour => tour.featured);
 export const getToursByCity = (city: string) => 
   city === 'All' ? tours : tours.filter(tour => tour.city === city);
 export const getTourById = (id: string) => tours.find(tour => tour.id === id);
+export const getSpecialTrip = () => tours.find(tour => tour.special);

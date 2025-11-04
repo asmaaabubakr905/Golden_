@@ -205,14 +205,59 @@ const TourDetails = () => {
                   <div>
                     <h3 className="text-2xl font-bold text-orange-500 mb-4 flex items-center"><Calendar className="w-6 h-6 mr-2 text-orange-400" />Daily Itinerary</h3>
                     <div className="space-y-4">
-                      {tour.itinerary.map((item, index) => (
-                        <div key={index} className="flex items-start space-x-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-medium shadow">
-                            {index + 1}
-                          </div>
-                          <p className="text-gray-700 pt-1">{item}</p>
-                        </div>
-                      ))}
+                      {(() => {
+                        let itemNumber = 0;
+                        return tour.itinerary.map((item, index) => {
+                          // Check if item is a day header (Day X)
+                          const isDayHeader = /^Day \d+$/i.test(item.trim());
+                          const isEmpty = item.trim() === '';
+                          
+                          if (isEmpty) {
+                            return null;
+                          }
+                          
+                          if (isDayHeader) {
+                            return (
+                              <div key={index} className="mt-6 mb-4">
+                                <div className="flex items-center space-x-3">
+                                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-xl flex items-center justify-center text-lg font-bold shadow-lg">
+                                    {item}
+                                  </div>
+                                  <div className="flex-1 h-0.5 bg-gradient-to-r from-orange-200 to-transparent"></div>
+                                </div>
+                              </div>
+                            );
+                          }
+                          
+                          // Check if item is a sub-item (starts with bullet) or "A visit to:"
+                          const isSubItem = item.trim().startsWith('•');
+                          const isVisitHeader = item.trim() === 'A visit to:';
+                          
+                          // Only increment item number for regular items (not sub-items, not visit header)
+                          if (!isSubItem && !isVisitHeader) {
+                            itemNumber++;
+                          }
+                          
+                          return (
+                            <div key={index} className={`flex items-start space-x-3 ${isSubItem ? 'ml-8' : ''}`}>
+                              {!isSubItem && !isVisitHeader && (
+                                <div className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-medium shadow">
+                                  {itemNumber}
+                                </div>
+                              )}
+                              {isSubItem && (
+                                <div className="flex-shrink-0 w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                              )}
+                              {isVisitHeader && (
+                                <div className="flex-shrink-0 w-8 h-8"></div>
+                              )}
+                              <p className={`text-gray-700 ${isSubItem ? 'pt-1' : 'pt-1'} ${isSubItem ? 'font-medium' : ''} ${isVisitHeader ? 'font-semibold text-orange-600' : ''}`}>
+                                {item}
+                              </p>
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                 )}
@@ -259,7 +304,7 @@ const TourDetails = () => {
               <div className="bg-white border border-orange-200 rounded-2xl p-8 sticky top-24 shadow-xl">
                 <div className="text-center mb-6">
                   <div className="text-3xl font-bold text-orange-500 mb-2">
-                    ${tour.price}
+                    {tour.special ? `${tour.price.toLocaleString()} EGP` : `$${tour.price}`}
                     <span className="text-lg font-normal text-gray-500"> /person</span>
                   </div>
                   <div className="flex items-center justify-center space-x-1 text-sm text-gray-600">

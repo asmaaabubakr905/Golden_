@@ -14,6 +14,7 @@ interface TourCardProps {
     rating: number;
     maxGuests: number;
     featured?: boolean;
+    special?: boolean;
   };
 }
 
@@ -64,7 +65,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
         {/* Price Badge */}
         <div className="absolute bottom-4 right-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl px-4 py-2 shadow-lg z-20">
           <div className="text-lg font-bold">
-            ${tour.price}
+            {tour.special ? `${tour.price.toLocaleString()} EGP` : `$${tour.price}`}
             <span className="text-xs font-normal opacity-90 ml-1">/person</span>
           </div>
         </div>

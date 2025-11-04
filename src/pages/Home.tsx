@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Users, Award, MapPin } from 'lucide-react';
+import { ArrowRight, Star, Users, Award, MapPin, Sparkles, Calendar, Clock } from 'lucide-react';
 import TourCard from '../components/TourCard';
-import { getFeaturedTours } from '../data/tours';
+import { getFeaturedTours, getSpecialTrip } from '../data/tours';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import '../swiper-custom.css';
@@ -92,6 +92,167 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Special Trip Section - Nuba Experience */}
+      {(() => {
+        const specialTrip = getSpecialTrip();
+        if (!specialTrip) return null;
+        
+        return (
+          <section className="py-20 bg-gradient-to-br from-orange-50 via-white to-amber-50 relative overflow-hidden">
+            {/* Background Decorative Elements */}
+            <div className="absolute inset-0">
+              <div className="absolute top-10 left-10 w-64 h-64 bg-orange-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
+              <div className="absolute bottom-10 right-10 w-80 h-80 bg-amber-200 rounded-full opacity-20 blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              {/* Header */}
+              <div className="text-center mb-12">
+                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-orange-500 to-amber-600 text-white px-6 py-3 rounded-full mb-6 shadow-lg">
+                  <Sparkles className="w-5 h-5" />
+                  <span className="font-bold text-lg">Special Trip</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                  Nuba Experience
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  A unique Nubian experience on a traditional Dahabya - Discover authentic Nubian culture
+                </p>
+              </div>
+
+              {/* Main Content Card */}
+              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-orange-200 hover:border-orange-400 transition-all duration-300 transform hover:scale-[1.01]">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                  {/* Image Section */}
+                  <div className="relative h-96 lg:h-full min-h-[400px] overflow-hidden">
+                    <img 
+                      src={specialTrip.image} 
+                      alt={specialTrip.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    
+                    {/* Badges */}
+                    <div className="absolute top-6 left-6 flex flex-col gap-3">
+                      <div className="bg-gradient-to-r from-orange-500 to-amber-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center space-x-2">
+                        <Star className="w-4 h-4 fill-current" />
+                        <span>{specialTrip.rating} Rating</span>
+                      </div>
+                      <div className="bg-white/95 backdrop-blur-sm text-orange-600 px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center space-x-2">
+                        <Award className="w-4 h-4" />
+                        <span>Special Experience</span>
+                      </div>
+                    </div>
+
+                    {/* Price Badge */}
+                    <div className="absolute bottom-6 right-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-4 rounded-2xl shadow-2xl">
+                      <div className="text-3xl font-bold">
+                        {specialTrip.price.toLocaleString()} EGP
+                        <span className="text-lg font-normal opacity-90">/person</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-8 lg:p-12 flex flex-col justify-center">
+                    <div className="mb-6">
+                      <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                        {specialTrip.title}
+                      </h3>
+                      <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                        {specialTrip.description}
+                      </p>
+                    </div>
+
+                    {/* Tour Details */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="flex items-center space-x-3 bg-orange-50 p-4 rounded-xl">
+                        <div className="bg-orange-500 p-2 rounded-lg">
+                          <Clock className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-600">Duration</div>
+                          <div className="font-bold text-gray-800">{specialTrip.duration}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3 bg-orange-50 p-4 rounded-xl">
+                        <div className="bg-orange-500 p-2 rounded-lg">
+                          <Users className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-600">Max Guests</div>
+                          <div className="font-bold text-gray-800">{specialTrip.maxGuests} people</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3 bg-orange-50 p-4 rounded-xl">
+                        <div className="bg-orange-500 p-2 rounded-lg">
+                          <MapPin className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-600">Location</div>
+                          <div className="font-bold text-gray-800">{specialTrip.location}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3 bg-orange-50 p-4 rounded-xl">
+                        <div className="bg-orange-500 p-2 rounded-lg">
+                          <Star className="w-5 h-5 text-white fill-current" />
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-600">Rating</div>
+                          <div className="font-bold text-gray-800">{specialTrip.rating}/5</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Highlights */}
+                    <div className="mb-8">
+                      <h4 className="text-xl font-bold text-gray-800 mb-4">Highlights:</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="flex items-center space-x-2 text-gray-700">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                          <span>Cultural immersion in Nubian villages</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-gray-700">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                          <span>Traditional Dahabya accommodation</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-gray-700">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                          <span>Historic temples and monuments</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-gray-700">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                          <span>Authentic Nubian experiences</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Link
+                        to={`/tour/${specialTrip.id}`}
+                        className="flex-1 bg-gradient-to-r from-orange-500 to-amber-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:from-orange-600 hover:to-amber-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
+                      >
+                        <Calendar className="w-5 h-5" />
+                        <span>View Details</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                      <Link
+                        to="/tours?city=Aswan"
+                        className="flex-1 bg-white text-orange-600 border-2 border-orange-500 px-8 py-4 rounded-xl text-lg font-bold hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
+                      >
+                        <span>More Aswan Tours</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Featured Tours Section */}
       <FeaturedTours />
