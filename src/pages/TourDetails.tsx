@@ -7,7 +7,7 @@ const TourDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState('overview');
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', phone: '' });
+  const [form, setForm] = useState({ name: '', phone: '' });
   const [formError, setFormError] = useState('');
   
   const tour = getTourById(id || '');
@@ -39,12 +39,12 @@ const TourDetails = () => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone) {
+    if (!form.name || !form.phone) {
       setFormError('Please fill in all fields.');
       return;
     }
     setFormError('');
-    const message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}`;
+    const message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nPhone: ${form.phone}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`http://wa.me/201507000720?text=${encodedMessage}`, '_blank');
     setShowModal(false);
@@ -84,18 +84,6 @@ const TourDetails = () => {
                   onChange={handleFormChange}
                   className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
                   placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
-                  placeholder="you@email.com"
                   required
                 />
               </div>

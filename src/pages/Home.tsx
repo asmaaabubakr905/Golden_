@@ -146,10 +146,10 @@ const Home = () => {
                     </div>
 
                     {/* Price Badge */}
-                    <div className="absolute bottom-6 right-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-4 rounded-2xl shadow-2xl">
-                      <div className="text-3xl font-bold">
-                        {specialTrip.price.toLocaleString()} EGP
-                        <span className="text-lg font-normal opacity-90">/person</span>
+                    <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-2 md:px-5 md:py-3 rounded-lg md:rounded-xl shadow-xl backdrop-blur-sm">
+                      <div className="text-sm md:text-xl font-bold tracking-tight">
+                        {specialTrip.price.toLocaleString()} <span className="text-xs md:text-sm font-semibold">EGP</span>
+                        <span className="text-xs md:text-sm font-normal opacity-90 block mt-0.5">/person</span>
                       </div>
                     </div>
                   </div>
