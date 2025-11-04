@@ -263,7 +263,7 @@ const TourDetails = () => {
               </div>
 
               {/* Gallery Section - Only for tours with galleryImages */}
-              {tour.galleryImages && tour.galleryImages.length > 0 && (
+              {activeTab === 'overview' && tour.galleryImages && tour.galleryImages.length > 0 && (
                 <div className="mb-8">
                   <h3 className="text-2xl font-bold text-orange-500 mb-6 flex items-center">
                     <Star className="w-6 h-6 mr-2 text-orange-400" />

@@ -495,11 +495,10 @@ export const tours: Tour[] = [
     includes: [
       'Hotel pickup and drop-off',
       'Accommodation on Dahabya',
-      'All meals (breakfast, lunch, dinner)',
+      'All meals (breakfast, dinner)',
       'Professional tour guide',
       'All entrance fees',
-      'All transfers',
-      'Snacks and refreshments',
+      'Internal transfers',
       'All taxes and service charges'
     ],
     excludes: [
@@ -507,7 +506,8 @@ export const tours: Tour[] = [
       'Kayak + Sandboarding (optional)',
       'Personal expenses',
       'Shopping at souqs',
-      'Gratuities'
+      'Gratuities',
+      'Train tickets'
     ],
     fullDescription: 'A unique Nubian experience on a traditional Dahabya - Discover authentic Nubian culture in an exceptional 4-day journey. Enjoy accommodation on the traditional Dahabya and explore Nubian villages and stunning archaeological sites in Aswan. This unique journey combines authentic Nubian culture with remarkable historical sites in an unforgettable trip.',
     galleryImages: [
