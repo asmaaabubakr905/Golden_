@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, CheckCircle, XCircle, X } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, CheckCircle, XCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getTourById } from '../data/tours';
 
 const TourDetails = () => {
@@ -9,8 +9,31 @@ const TourDetails = () => {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '' });
   const [formError, setFormError] = useState('');
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   
   const tour = getTourById(id || '');
+
+  // Keyboard navigation for image gallery
+  useEffect(() => {
+    if (selectedImageIndex === null || !tour.galleryImages) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedImageIndex(null);
+      } else if (e.key === 'ArrowLeft' && tour.galleryImages) {
+        setSelectedImageIndex((prev) => 
+          prev !== null && prev > 0 ? prev - 1 : tour.galleryImages!.length - 1
+        );
+      } else if (e.key === 'ArrowRight' && tour.galleryImages) {
+        setSelectedImageIndex((prev) => 
+          prev !== null && prev < tour.galleryImages!.length - 1 ? prev + 1 : 0
+        );
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImageIndex, tour.galleryImages]);
   
   if (!tour) {
     return (
@@ -52,7 +75,67 @@ const TourDetails = () => {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Modal */}
+      {/* Image Lightbox Modal */}
+      {selectedImageIndex !== null && tour.galleryImages && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+          onClick={() => setSelectedImageIndex(null)}
+        >
+          <button
+            onClick={() => setSelectedImageIndex(null)}
+            className="absolute top-4 right-4 text-white hover:text-orange-400 transition-colors z-10 bg-black/50 rounded-full p-2"
+            aria-label="Close"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          
+          {tour.galleryImages.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImageIndex((prev) => 
+                    prev !== null && prev > 0 ? prev - 1 : (tour.galleryImages?.length || 1) - 1
+                  );
+                }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-orange-400 transition-colors z-10 bg-black/50 rounded-full p-3 hover:bg-black/70"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImageIndex((prev) => 
+                    prev !== null && prev < (tour.galleryImages?.length || 1) - 1 ? prev + 1 : 0
+                  );
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-orange-400 transition-colors z-10 bg-black/50 rounded-full p-3 hover:bg-black/70"
+                aria-label="Next image"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
+          
+          <div className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            {selectedImageIndex !== null && (
+              <>
+                <img
+                  src={tour.galleryImages[selectedImageIndex]}
+                  alt={`${tour.title} - Image ${selectedImageIndex + 1}`}
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm">
+                  {selectedImageIndex + 1} / {tour.galleryImages.length}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Booking Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-gradient-to-br from-white via-orange-50 to-amber-50 rounded-3xl shadow-2xl w-full max-w-md p-8 relative animate-fadeIn border border-orange-100">
@@ -178,6 +261,35 @@ const TourDetails = () => {
                   ))}
                 </nav>
               </div>
+
+              {/* Gallery Section - Only for tours with galleryImages */}
+              {tour.galleryImages && tour.galleryImages.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-2xl font-bold text-orange-500 mb-6 flex items-center">
+                    <Star className="w-6 h-6 mr-2 text-orange-400" />
+                    Photo Gallery
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+                    {tour.galleryImages.map((img, index) => (
+                      <div
+                        key={index}
+                        onClick={() => setSelectedImageIndex(index)}
+                        className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-xl"
+                      >
+                        <img
+                          src={img}
+                          alt={`${tour.title} - Image ${index + 1}`}
+                          className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300"></div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-4 text-center">
+                    Click on any image to view in full size
+                  </p>
+                </div>
+              )}
 
               {/* Tab Content */}
               <div className="prose prose-lg max-w-none">

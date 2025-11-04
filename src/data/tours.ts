@@ -10,6 +10,20 @@ import img9 from '../assets/Egyptian-Museum-and-Old-Cairo-TOur-1.webp';
 import img10 from '../assets/pyramids.jpg';
 import img11 from '../assets/fluca luxor.jpg';
 import nubaImg from '../assets/Nuba.jpg';
+import galleryImg1 from '../assets/1.jpg';
+import galleryImg2 from '../assets/2.jpg';
+import galleryImg3 from '../assets/3.jpg';
+import galleryImg4 from '../assets/4.jpg';
+import galleryImg5 from '../assets/5.jpg';
+import galleryImg6 from '../assets/6.jpg';
+import galleryImg7 from '../assets/7.jpg';
+import galleryImg8 from '../assets/8.jpg';
+import galleryImg9 from '../assets/9.jpg';
+import galleryImg10 from '../assets/10.jpg';
+import galleryImg11 from '../assets/11.jpg';
+import galleryImg12 from '../assets/12.jpg';
+import galleryImg13 from '../assets/13.jpg';
+import galleryImg14 from '../assets/14.jpg';
 export interface Tour {
   id: string;
   title: string;
@@ -27,6 +41,7 @@ export interface Tour {
   includes: string[];
   excludes: string[];
   fullDescription: string;
+  galleryImages?: string[];
 }
 
 export const tours: Tour[] = [
@@ -494,7 +509,23 @@ export const tours: Tour[] = [
       'Shopping at souqs',
       'Gratuities'
     ],
-    fullDescription: 'A unique Nubian experience on a traditional Dahabya - Discover authentic Nubian culture in an exceptional 4-day journey. Enjoy accommodation on the traditional Dahabya and explore Nubian villages and stunning archaeological sites in Aswan. This unique journey combines authentic Nubian culture with remarkable historical sites in an unforgettable trip.'
+    fullDescription: 'A unique Nubian experience on a traditional Dahabya - Discover authentic Nubian culture in an exceptional 4-day journey. Enjoy accommodation on the traditional Dahabya and explore Nubian villages and stunning archaeological sites in Aswan. This unique journey combines authentic Nubian culture with remarkable historical sites in an unforgettable trip.',
+    galleryImages: [
+      galleryImg1,
+      galleryImg2,
+      galleryImg3,
+      galleryImg4,
+      galleryImg5,
+      galleryImg6,
+      galleryImg7,
+      galleryImg8,
+      galleryImg9,
+      galleryImg10,
+      galleryImg11,
+      galleryImg12,
+      galleryImg13,
+      galleryImg14
+    ]
   },
 ];
 
