@@ -224,13 +224,13 @@ const Home = () => {
                         <span>View Details</span>
                         <ArrowRight className="w-5 h-5" />
                       </Link>
-                      <Link
+                      {/* <Link
                         to="/tours?city=Aswan"
                         className="flex-1 bg-white text-orange-600 border-2 border-orange-500 px-8 py-4 rounded-xl text-lg font-bold hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
                       >
                         <span>More Aswan Tours</span>
                         <ArrowRight className="w-5 h-5" />
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>
