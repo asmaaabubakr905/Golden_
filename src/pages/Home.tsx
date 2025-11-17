@@ -60,34 +60,20 @@ const Home = () => {
       {/* Stats Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-white" />
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+            <div className="text-center p-2 md:p-6 bg-transparent md:bg-white md:rounded-xl md:shadow-md md:border md:border-gray-100 transition-transform md:hover:-translate-y-1">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm md:shadow">
+                <Star className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <div className="text-3xl font-bold text-gray-800 mb-2">10,000+</div>
-              <div className="text-gray-600">Happy Travelers</div>
+              <div className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">4.9</div>
+              <div className="text-gray-600 md:text-base">Average Rating</div>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-white" />
+            <div className="text-center p-2 md:p-6 bg-transparent md:bg-white md:rounded-xl md:shadow-md md:border md:border-gray-100 transition-transform md:hover:-translate-y-1">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm md:shadow">
+                <Award className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <div className="text-3xl font-bold text-gray-800 mb-2">4.9</div>
-              <div className="text-gray-600">Average Rating</div>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-3xl font-bold text-gray-800 mb-2">15+</div>
-              <div className="text-gray-600">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-3xl font-bold text-gray-800 mb-2">50+</div>
-              <div className="text-gray-600">Tour Destinations</div>
+              <div className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">5+</div>
+              <div className="text-gray-600 md:text-base">Years Experience</div>
             </div>
           </div>
         </div>
