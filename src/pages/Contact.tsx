@@ -98,7 +98,7 @@ Message: ${formData.message}`;
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-800 mb-2">Email</h3>
-                    <p className="text-lg text-gray-700 font-semibold">info@goldenphoenixtravel.com</p>
+                    <p className="text-lg text-gray-700 font-semibold">info@goldentourstravel.com</p>
                     <p className="text-sm text-gray-500 flex items-center mt-1">
                       <Clock className="w-4 h-4 mr-2" />
                       We'll respond within 24 hours
@@ -142,16 +142,16 @@ Message: ${formData.message}`;
                   <h3 className="text-xl font-bold text-gray-800">Follow Us</h3>
                 </div>
                 <div className="flex space-x-4">
-                <a
+                {/* <a
   href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
   target="_blank"
   rel="noopener noreferrer"
   className="group w-14 h-14 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"
 >
   <Facebook className="w-7 h-7 text-white" />
-</a>
+</a> */}
 <a
-  href="https://www.instagram.com/golden_phoenix_tours"
+  href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
   target="_blank"
   rel="noopener noreferrer"
   className="group w-14 h-14 bg-gradient-to-r from-orange-400 to-orange-500 rounded-2xl flex items-center justify-center text-white hover:from-orange-500 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110"

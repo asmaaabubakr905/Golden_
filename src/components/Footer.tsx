@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Facebook, Instagram } from 'lucide-react';
-import logo from '../assets/WhatsAppImage2025-07-04at00.56.28_e95a1a63.png';
+import logo from '../assets/Logoo2.png';
 
 const Footer = () => {
   return (
@@ -10,30 +10,30 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10  rounded-full flex items-center justify-center">
-              <img src={logo} alt="Golden Phoenix Tours Logo" className="w-full h-full object-contain" />
-              </div>
+               <div className="w-20 h-20 rounded-full flex items-center justify-center">
+              <img src={logo} alt="Golden tours Tours Logo" className="w-full h-full object-contain" />
+            </div>
               <div>
-                <div className="text-xl font-bold">GOLDEN PHOENIX</div>
+                <div className="text-xl font-bold">GOLDEN TOURS</div>
                 <div className="text-sm text-gray-300">TOURS & TRAVEL</div>
               </div>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
-              Discover the wonders of Egypt with Golden Phoenix Tours. We offer carefully curated 
+              Discover the wonders of Egypt with Golden tours Tours. We offer carefully curated 
               experiences across Cairo, Alexandria, Luxor, Aswan, and beyond. Your journey to 
               ancient civilizations starts here.
             </p>
             <div className="flex space-x-4">
-              <a
+              {/* <a
                 href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
               >
                 <Facebook className="w-5 h-5" />
-              </a>
+              </a> */}
               <a
-                href="https://www.instagram.com/golden_phoenix_tours"
+                href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
@@ -69,7 +69,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-orange-500" />
-                <span className="text-gray-300">info@goldenphoenixtravel.com</span>
+                <span className="text-gray-300">info@goldentourstravel.com</span>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@ const Footer = () => {
       <div className="border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="text-center text-gray-400 text-sm">
-            © 2024 Golden Phoenix Tours. All rights reserved.
+            © 2024 Golden tours Tours. All rights reserved.
           </div>
         </div>
       </div>

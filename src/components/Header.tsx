@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaFacebookF, FaInstagram, FaBars, FaTimes } from 'react-icons/fa';
-import logo from '../assets/WhatsAppImage2025-07-04at00.56.28_e95a1a63.png';
+import logo from '../assets/Logoo2.png';
 
 const Header = () => {
   const location = useLocation();
@@ -28,11 +28,11 @@ const Header = () => {
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
         {/* Logo & Brand */}
         <Link to="/" className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-          <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden flex items-center justify-center">
-            <img src={logo} alt="Golden Phoenix Tours Logo" className="w-full h-full object-contain" />
+          <div className="w-20 h-10 sm:w-24 sm:h-14 rounded-full overflow-hidden flex items-center justify-center">
+            <img src={logo} alt="Golden tours Tours Logo" className="w-full h-full object-contain" />
           </div>
           <div>
-            <div className="text-lg sm:text-2xl font-extrabold text-gray-800 tracking-wide">GOLDEN PHOENIX</div>
+            <div className="text-lg sm:text-2xl font-extrabold text-gray-800 tracking-wide">GOLDEN TOURS</div>
             <div className="text-xs text-gray-500 tracking-widest hidden sm:block">TOURS & TRAVEL</div>
           </div>
         </Link>
@@ -55,7 +55,7 @@ const Header = () => {
 
         {/* Desktop Social + Book Now */}
         <div className="hidden sm:flex items-center space-x-3 lg:space-x-4">
-          <a
+          {/* <a
             href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
             target="_blank"
             rel="noopener noreferrer"
@@ -63,9 +63,9 @@ const Header = () => {
             aria-label="Facebook"
           >
             <FaFacebookF size={16} />
-          </a>
+          </a> */}
           <a
-            href="https://www.instagram.com/golden_phoenix_tours"
+            href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
             target="_blank"
             rel="noopener noreferrer"
             className="w-8 h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white text-orange-500 transition"
@@ -101,11 +101,10 @@ const Header = () => {
                 <Link
                   to={item.href}
                   onClick={closeMenu}
-                  className={`block py-2 px-3 rounded-md font-medium transition ${
-                    isActive(item.href) 
-                      ? 'text-orange-500 bg-orange-50' 
+                  className={`block py-2 px-3 rounded-md font-medium transition ${isActive(item.href)
+                      ? 'text-orange-500 bg-orange-50'
                       : 'text-gray-700 hover:text-orange-500 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </Link>
@@ -116,7 +115,7 @@ const Header = () => {
           {/* Mobile Social + Book Now */}
           <div className="flex items-center justify-between pt-4 border-t border-gray-200">
             <div className="flex items-center space-x-3">
-              <a
+              {/* <a
                 href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -124,9 +123,9 @@ const Header = () => {
                 aria-label="Facebook"
               >
                 <FaFacebookF size={18} />
-              </a>
+              </a> */}
               <a
-                href="https://www.instagram.com/golden_phoenix_tours"
+                href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white text-orange-500 transition"

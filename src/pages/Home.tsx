@@ -264,7 +264,7 @@ const Home = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Why Choose Golden Phoenix Tours?</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">Why Choose Golden tours Tours?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               We are committed to providing exceptional travel experiences that combine comfort, 
               authenticity, and expert knowledge of Egypt's rich heritage.
@@ -313,7 +313,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Your Egyptian Adventure?</h2>
           <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of travelers who have discovered the magic of Egypt with Golden Phoenix Tours. 
+            Join thousands of travelers who have discovered the magic of Egypt with Golden tours Tours. 
             Your unforgettable journey awaits!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
