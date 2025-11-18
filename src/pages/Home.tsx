@@ -109,9 +109,9 @@ const Home = () => {
 
               {/* Main Content Card */}
               <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-orange-200 hover:border-orange-400 transition-all duration-300 transform hover:scale-[1.01]">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-0 lg:items-center">
                   {/* Image Section */}
-                  <div className="relative h-96 lg:h-full min-h-[400px] overflow-hidden">
+                  <div className="relative h-96 lg:h-full min-h-[400px] lg:min-h-[480px] overflow-hidden">
                     <img 
                       src={specialTrip.image} 
                       alt={specialTrip.title}
@@ -141,18 +141,16 @@ const Home = () => {
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-8 lg:p-12 flex flex-col justify-center">
-                    <div className="mb-6">
-                      <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                  <div className="p-8 lg:px-14 lg:py-10 flex flex-col gap-8 lg:gap-10 lg:max-w-xl lg:mx-auto">
+                    <div className="space-y-4 lg:space-y-5">
+                      <div className="w-16 h-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-400"></div>
+                      <h3 className="text-3xl md:text-4xl font-bold text-gray-800 leading-tight">
                         {specialTrip.title}
                       </h3>
-                      <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                        {specialTrip.description}
-                      </p>
                     </div>
 
                     {/* Tour Details */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="grid grid-cols-2 gap-4 lg:gap-5">
                       <div className="flex items-center space-x-3 bg-orange-50 p-4 rounded-xl">
                         <div className="bg-orange-500 p-2 rounded-lg">
                           <Clock className="w-5 h-5 text-white" />
@@ -190,32 +188,8 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-
-                    {/* Highlights */}
-                    <div className="mb-8">
-                      <h4 className="text-xl font-bold text-gray-800 mb-4">Highlights:</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="flex items-center space-x-2 text-gray-700">
-                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                          <span>Cultural immersion in Nubian villages</span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-gray-700">
-                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                          <span>Traditional Dahabya accommodation</span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-gray-700">
-                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                          <span>Historic temples and monuments</span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-gray-700">
-                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                          <span>Authentic Nubian experiences</span>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4 lg:gap-5">
                       <Link
                         to={`/tour/${specialTrip.id}`}
                         className="flex-1 bg-gradient-to-r from-orange-500 to-amber-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:from-orange-600 hover:to-amber-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
@@ -224,13 +198,15 @@ const Home = () => {
                         <span>View Details</span>
                         <ArrowRight className="w-5 h-5" />
                       </Link>
-                      {/* <Link
-                        to="/tours?city=Aswan"
-                        className="flex-1 bg-white text-orange-600 border-2 border-orange-500 px-8 py-4 rounded-xl text-lg font-bold hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
+                      <a
+                        href={`https://wa.me/201507000720?text=I'm interested in booking the ${specialTrip.title} tour. Can you provide more details?`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
                       >
-                        <span>More Aswan Tours</span>
+                        <span>Book Now</span>
                         <ArrowRight className="w-5 h-5" />
-                      </Link> */}
+                      </a>
                     </div>
                   </div>
                 </div>
