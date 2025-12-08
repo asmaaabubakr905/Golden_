@@ -533,7 +533,7 @@ export const tours: Tour[] = [
     title: 'Nuba - New Years',
     description: 'Celebrate New Year’s Eve on a Dahabya in Nubia — culture, nature, and parties along the Nile.',
     image: nubaNewYearsImg,
-    price: 1100,
+    price: 11500,
     duration: '4 days',
     location: 'Aswan',
     city: 'Aswan',
