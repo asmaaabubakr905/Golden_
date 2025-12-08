@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, CheckCircle, XCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getTourBySlug } from '../data/tours';
+import { getTourBySlug, getTourSlug } from '../data/tours';
 
 const TourDetails = () => {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', guests: '1' });
@@ -16,6 +17,15 @@ const TourDetails = () => {
 
   // Stable review count per tour to avoid changing on re-render
   const reviewsCount = useMemo(() => Math.floor(Math.random() * 200) + 50, [tour?.id]);
+
+  // Redirect legacy / numeric ids to canonical slug URL
+  useEffect(() => {
+    if (!tour) return;
+    const canonical = getTourSlug(tour);
+    if (slug !== canonical) {
+      navigate(`/tour/${canonical}`, { replace: true });
+    }
+  }, [slug, tour?.id, navigate]);
 
   // Default tab: open itinerary first for special trips (e.g., New Year), otherwise overview
   useEffect(() => {
