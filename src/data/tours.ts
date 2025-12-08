@@ -576,7 +576,7 @@ export const tours: Tour[] = [
     includes: [
       'Accommodation',
       'Private transportation in Nuba (cars & boats)',
-      'Tour guide from Paradise Egypt Team',
+      'Tour guide from Golden Egypt Team',
       'All activities mentioned',
       'All meals and drinks mentioned (all dinners on the Dahabya)',
       'Nubian Party "Galabeya"',
