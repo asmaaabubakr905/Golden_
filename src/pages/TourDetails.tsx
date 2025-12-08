@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, CheckCircle, XCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getTourById } from '../data/tours';
@@ -7,33 +7,52 @@ const TourDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState('overview');
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '' });
+  const [form, setForm] = useState({ name: '', phone: '', guests: '1' });
   const [formError, setFormError] = useState('');
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
   
   const tour = getTourById(id || '');
 
+  // Stable review count per tour to avoid changing on re-render
+  const reviewsCount = useMemo(() => Math.floor(Math.random() * 200) + 50, [tour?.id]);
+
+  // Default tab: open itinerary first for special trips (e.g., New Year), otherwise overview
+  useEffect(() => {
+    if (!tour) return;
+    setActiveTab(tour.special ? 'itinerary' : 'overview');
+  }, [tour?.id]);
+
+  // One-time New Year celebration overlay for special trips (e.g., New Year)
+  useEffect(() => {
+    if (!tour?.special) return;
+    setShowCelebration(true);
+    const timer = setTimeout(() => setShowCelebration(false), 4200);
+    return () => clearTimeout(timer);
+  }, [tour?.id, tour?.special]);
+
   // Keyboard navigation for image gallery
   useEffect(() => {
-    if (selectedImageIndex === null || !tour.galleryImages) return;
+    const gallery = tour?.galleryImages;
+    if (selectedImageIndex === null || !gallery) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setSelectedImageIndex(null);
-      } else if (e.key === 'ArrowLeft' && tour.galleryImages) {
+      } else if (e.key === 'ArrowLeft') {
         setSelectedImageIndex((prev) => 
-          prev !== null && prev > 0 ? prev - 1 : tour.galleryImages!.length - 1
+          prev !== null && prev > 0 ? prev - 1 : gallery.length - 1
         );
-      } else if (e.key === 'ArrowRight' && tour.galleryImages) {
+      } else if (e.key === 'ArrowRight') {
         setSelectedImageIndex((prev) => 
-          prev !== null && prev < tour.galleryImages!.length - 1 ? prev + 1 : 0
+          prev !== null && prev < gallery.length - 1 ? prev + 1 : 0
         );
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImageIndex, tour.galleryImages]);
+  }, [selectedImageIndex, tour?.galleryImages]);
   
   if (!tour) {
     return (
@@ -56,18 +75,36 @@ const TourDetails = () => {
     setShowModal(true);
   };
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const maxGuests = tour?.maxGuests ?? 10;
+
+  const adjustGuests = (delta: number) => {
+    setForm(prev => {
+      const current = Number(prev.guests) || 1;
+      const next = Math.min(maxGuests, Math.max(1, current + delta));
+      return { ...prev, guests: String(next) };
+    });
+  };
+
+  useEffect(() => {
+    setForm(prev => {
+      const current = Number(prev.guests) || 1;
+      const clamped = Math.min(maxGuests, Math.max(1, current));
+      return { ...prev, guests: String(clamped) };
+    });
+  }, [maxGuests]);
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.phone) {
+    if (!form.name || !form.phone || !form.guests) {
       setFormError('Please fill in all fields.');
       return;
     }
     setFormError('');
-    const message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nPhone: ${form.phone}`;
+    const message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nPhone: ${form.phone}\nGuests: ${form.guests}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`http://wa.me/201507000720?text=${encodedMessage}`, '_blank');
     setShowModal(false);
@@ -75,6 +112,116 @@ const TourDetails = () => {
 
   return (
     <div className="bg-white min-h-screen">
+      {/* New Year Celebration Overlay (shows once on load for special trips) */}
+      {showCelebration && tour?.special && (
+        <div className="fixed inset-0 z-40 pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-orange-500/15 via-amber-200/15 to-transparent animate-pulse"></div>
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+          {/* Fireworks */}
+          {Array.from({ length: 10 }).map((_, idx) => {
+            const palette = ['#ffb347', '#ffd166', '#ff6b6b', '#ffa500', '#ffe29f'];
+            const color = palette[idx % palette.length];
+            const top = 12 + (idx % 5) * 15;
+            const left = ((idx * 19) % 90) + 5;
+            const delay = idx * 0.18;
+            const size = 140 + (idx % 4) * 35;
+            return (
+              <div
+                key={idx}
+                className="absolute"
+                style={{ top: `${top}%`, left: `${left}%`, animation: `firework-burst 1.8s ease-out ${delay}s forwards` }}
+              >
+                <div
+                  className="relative"
+                  style={{
+                    width: size,
+                    height: size,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                >
+                  {Array.from({ length: 14 }).map((__, sparkIdx) => (
+                    <span
+                      key={sparkIdx}
+                      className="absolute block rounded-full"
+                      style={{
+                        width: '6px',
+                        height: '24px',
+                        background: `linear-gradient(180deg, ${color}, rgba(255,255,255,0))`,
+                        boxShadow: `0 0 12px ${color}`,
+                        top: '50%',
+                        left: '50%',
+                        transformOrigin: 'center 95%',
+                        transform: `translate(-50%, -50%) rotate(${sparkIdx * (360 / 14)}deg) scaleY(0)`,
+                        animation: `spark 1.8s ease-out ${delay}s forwards`,
+                      }}
+                    />
+                  ))}
+                  <span
+                    className="absolute block rounded-full"
+                    style={{
+                      width: '18px',
+                      height: '18px',
+                      background: color,
+                      boxShadow: `0 0 18px ${color}, 0 0 36px ${color}`,
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%) scale(0)',
+                      animation: `core 1s ease-out ${delay}s forwards`,
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+          {/* Confetti Ribbons */}
+          {Array.from({ length: 24 }).map((_, idx) => {
+            const palette = ['#ff9f1c', '#ffe66d', '#ff6b6b', '#f6c343', '#ffd166', '#ffa500'];
+            const color = palette[idx % palette.length];
+            const left = Math.random() * 100;
+            const delay = Math.random() * 0.8;
+            const duration = 2.8 + Math.random() * 1.2;
+            const rotate = Math.random() * 360;
+            return (
+              <span
+                key={`confetti-${idx}`}
+                className="absolute block rounded-sm"
+                style={{
+                  width: '8px',
+                  height: '22px',
+                  background: color,
+                  boxShadow: `0 0 10px ${color}`,
+                  top: '-10%',
+                  left: `${left}%`,
+                  transform: `rotate(${rotate}deg)`,
+                  animation: `confetti-fall ${duration}s ease-in ${delay}s forwards`,
+                }}
+              />
+            );
+          })}
+          <style>{`
+            @keyframes firework-burst {
+              0% { opacity: 0; transform: scale(0.7); }
+              25% { opacity: 1; transform: scale(1); }
+              100% { opacity: 0; transform: scale(1.2); }
+            }
+            @keyframes spark {
+              0% { transform: translate(-50%, -50%) rotate(0deg) scaleY(0); opacity: 1; }
+              30% { transform: translate(-50%, -50%) rotate(0deg) scaleY(1); opacity: 1; }
+              100% { transform: translate(-50%, -50%) rotate(0deg) scaleY(0.15); opacity: 0; }
+            }
+            @keyframes core {
+              0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+              50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+              100% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+            }
+            @keyframes confetti-fall {
+              0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+              80% { opacity: 1; }
+              100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+            }
+          `}</style>
+        </div>
+      )}
       {/* Image Lightbox Modal */}
       {selectedImageIndex !== null && tour.galleryImages && (
         <div 
@@ -182,6 +329,28 @@ const TourDetails = () => {
                   required
                 />
               </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Guests</label>
+                <div className="flex items-center justify-between space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => adjustGuests(-1)}
+                    className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 text-gray-700 text-xl font-bold hover:bg-gray-50 transition"
+                  >
+                    –
+                  </button>
+                  <div className="flex-1 text-center py-3 px-4 rounded-full border border-gray-300 bg-white text-gray-800 text-lg font-semibold">
+                    {form.guests}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => adjustGuests(1)}
+                    className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 text-gray-700 text-xl font-bold hover:bg-gray-50 transition"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               {formError && <div className="text-red-500 text-sm text-center">{formError}</div>}
               <button
                 type="submit"
@@ -230,7 +399,7 @@ const TourDetails = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                <span>{tour.rating}</span>
+                <span>{tour.rating} ({reviewsCount} reviews)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="w-5 h-5" />
@@ -417,7 +586,7 @@ const TourDetails = () => {
                   </div>
                   <div className="flex items-center justify-center space-x-1 text-sm text-gray-600">
                     <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span>{tour.rating} ({Math.floor(Math.random() * 200) + 50} reviews)</span>
+                    <span>{tour.rating} ({reviewsCount} reviews)</span>
                   </div>
                 </div>
 

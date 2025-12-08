@@ -548,7 +548,7 @@ export const tours: Tour[] = [
       'Visit Nubian houses and see crocodiles (tea & pie provided)',
       'Buy Nubian galabeya and customs for the party',
       'Premium dinner on the Dahabya',
-      'New Year’s Party on the Dahabya',
+      'New Year’s Party ',
       '',
       'Day 2',
       'Breakfast on the Dahabya',
