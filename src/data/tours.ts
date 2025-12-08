@@ -10,6 +10,7 @@ import img9 from '../assets/Egyptian-Museum-and-Old-Cairo-TOur-1.webp';
 import img10 from '../assets/pyramids.jpg';
 import img11 from '../assets/fluca luxor.jpg';
 import nubaImg from '../assets/Nuba.jpg';
+import nubaNewYearsImg from '../assets/31DEC.png';
 import galleryImg1 from '../assets/1.jpg';
 import galleryImg2 from '../assets/2.jpg';
 import galleryImg3 from '../assets/3.jpg';
@@ -455,7 +456,7 @@ export const tours: Tour[] = [
     rating: 5.0,
     maxGuests: 16,
     featured: true,
-    special: true,
+    special: false,
     itinerary: [
       'Day 1',
       'Train station pickup',
@@ -526,6 +527,72 @@ export const tours: Tour[] = [
       galleryImg13,
       galleryImg14
     ]
+  },
+  {
+    id: '13',
+    title: 'Nuba - New Years',
+    description: 'Celebrate New Year’s Eve on a Dahabya in Nubia — culture, nature, and parties along the Nile.',
+    image: nubaNewYearsImg,
+    price: 1100,
+    duration: '4 days',
+    location: 'Aswan',
+    city: 'Aswan',
+    rating: 5.0,
+    maxGuests: 20,
+    featured: true,
+    special: true,
+    itinerary: [
+      'Day 1',
+      'Arrival to Aswan & pick-up from train station',
+      'Check-in on the Dahabya & rest',
+      'Visit Nubian houses and see crocodiles (tea & pie provided)',
+      'Buy Nubian galabeya and customs for the party',
+      'Premium dinner on the Dahabya',
+      'New Year’s Party on the Dahabya',
+      '',
+      'Day 2',
+      'Breakfast on the Dahabya',
+      'Boat trip to Philae Temple',
+      'Visit Philae Temple',
+      'Kayaking (optional)',
+      'Exploring Nubian hidden gems',
+      'Premium dinner on the Dahabya',
+      '',
+      'Day 3',
+      'Breakfast at the hotel',
+      'A visit to:',
+      '• Abu Hawa Mountain short hike',
+      '• Photos from the highest point in Aswan',
+      '• Sailing boat on the Nile River',
+      'Dinner on the Dahabya',
+      'Free time & shopping in Nubian markets',
+      '',
+      'Day 4',
+      'Breakfast',
+      'Check-out',
+      'Drop-off at train station',
+      'Back to Cairo'
+    ],
+    includes: [
+      'Accommodation',
+      'Private transportation in Nuba (cars & boats)',
+      'Tour guide from Paradise Egypt Team',
+      'All activities mentioned',
+      'All meals and drinks mentioned (all dinners on the Dahabya)',
+      'Nubian Party "Galabeya"',
+      'New Year’s Party',
+      'All tickets and permits required for the activities'
+    ],
+    excludes: [
+      'Train / Flight tickets from/to Cairo-Aswan',
+      'Extra meals and drinks',
+      'Nubian party custom',
+      'Personal expenses',
+      'Medical services',
+      'Kayaking',
+      'Tips'
+    ],
+    fullDescription: 'Nuba, located in Upper Egypt, is an enchanting destination for its rich cultural heritage and stunning natural landscapes. Discover the magic of Nubia and the grandeur of Abu Simbel — a journey through ancient temples, vibrant culture, and timeless landscapes along the Nile. Highlights include Philae Temple, visiting Nubian houses to watch crocodiles, Heissa Island, sunset from a secret spot, exploring local markets, Nubian Galabeya party, hidden gems, Abu Hawa Mountain hike, and shopping. The trip runs on 31/12 with New Year’s celebrations on board the Dahabya.'
   },
 ];
 

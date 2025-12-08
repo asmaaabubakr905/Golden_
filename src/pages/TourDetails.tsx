@@ -189,6 +189,14 @@ const TourDetails = () => {
               >
                 Send Booking via WhatsApp
               </button>
+              <a
+                href="https://ipn.eg/S/amrabouzied7/instapay/6QCON8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center bg-white text-orange-600 border border-orange-200 py-3 rounded-lg font-semibold text-lg shadow-sm hover:bg-orange-50 transition-all"
+              >
+                Pay via InstaPay
+              </a>
             </form>
           </div>
         </div>
