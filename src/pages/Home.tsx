@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Users, Award, MapPin, Sparkles, Calendar, Clock } from 'lucide-react';
 import TourCard from '../components/TourCard';
-import { getFeaturedTours, getSpecialTrip } from '../data/tours';
+import { getFeaturedTours, getSpecialTrip, getTourSlug } from '../data/tours';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import '../swiper-custom.css';
@@ -191,7 +191,7 @@ const Home = () => {
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 lg:gap-5">
                       <Link
-                        to={`/tour/${specialTrip.id}`}
+                        to={`/tour/${getTourSlug(specialTrip)}`}
                         className="flex-1 bg-gradient-to-r from-orange-500 to-amber-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:from-orange-600 hover:to-amber-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
                       >
                         <Calendar className="w-5 h-5" />

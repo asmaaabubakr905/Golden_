@@ -27,6 +27,7 @@ import galleryImg13 from '../assets/13.jpg';
 import galleryImg14 from '../assets/14.jpg';
 export interface Tour {
   id: string;
+  slug?: string;
   title: string;
   description: string;
   image: string;
@@ -44,6 +45,14 @@ export interface Tour {
   fullDescription: string;
   galleryImages?: string[];
 }
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+export const getTourSlug = (tour: Tour) => tour.slug ?? slugify(tour.title);
 
 export const tours: Tour[] = [
   {
@@ -601,5 +610,7 @@ export const cities = ['All', 'Cairo', 'Alexandria', 'Luxor', 'Aswan'];
 export const getFeaturedTours = () => tours.filter(tour => tour.featured);
 export const getToursByCity = (city: string) => 
   city === 'All' ? tours : tours.filter(tour => tour.city === city);
-export const getTourById = (id: string) => tours.find(tour => tour.id === id);
+export const getTourBySlug = (slug: string) =>
+  tours.find(tour => getTourSlug(tour) === slug || tour.id === slug);
+
 export const getSpecialTrip = () => tours.find(tour => tour.special);

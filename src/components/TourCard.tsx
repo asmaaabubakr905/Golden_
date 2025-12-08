@@ -1,6 +1,6 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import { MapPin, Clock, Star, Users, Heart, Share2, ArrowRight, Sparkles } from 'lucide-react';
+import { getTourSlug } from '../data/tours';
 
 interface TourCardProps {
   tour: {
@@ -107,7 +107,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
         {/* Action Button */}
         <a
-          href={`/tour/${tour.id}`}
+          href={`/tour/${getTourSlug(tour)}`}
           className="group/btn relative w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-6 rounded-2xl font-bold text-center hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2 no-underline"
         >
           <span>View Details</span>

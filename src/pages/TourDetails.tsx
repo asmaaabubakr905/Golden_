@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, MapPin, Clock, Users, Star, Calendar, CheckCircle, XCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getTourById } from '../data/tours';
+import { getTourBySlug } from '../data/tours';
 
 const TourDetails = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [activeTab, setActiveTab] = useState('overview');
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', guests: '1' });
@@ -12,7 +12,7 @@ const TourDetails = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
   
-  const tour = getTourById(id || '');
+  const tour = getTourBySlug(slug || '');
 
   // Stable review count per tour to avoid changing on re-render
   const reviewsCount = useMemo(() => Math.floor(Math.random() * 200) + 50, [tour?.id]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Clock, Star, Users, ArrowRight, Heart, Calendar, Award } from 'lucide-react';
-import { getToursByCity, Tour } from '../data/tours';
+import { getToursByCity, Tour, getTourSlug } from '../data/tours';
 import { Link } from 'react-router-dom';
 
 // اختر رحلة واحدة من كل مدينة رئيسية
@@ -103,7 +103,7 @@ const TourCard = ({ tour }: { tour: Tour }) => {
             <span className="text-sm font-normal text-gray-500"> /person</span>
           </div>
           <Link
-            to={`/tour/${tour.id}`}
+            to={`/tour/${getTourSlug(tour)}`}
             className={`px-6 py-2 rounded-xl font-medium transition-all duration-300 ${
               isHovered 
                 ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg scale-105' 
