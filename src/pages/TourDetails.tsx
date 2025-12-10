@@ -8,7 +8,7 @@ const TourDetails = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', guests: '1' });
+  const [form, setForm] = useState({ name: '', phone: '', guests: '1', date: '' });
   const [formError, setFormError] = useState('');
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -113,8 +113,16 @@ const TourDetails = () => {
       setFormError('Please fill in all fields.');
       return;
     }
+    // Check if date is required for Nuba Experience
+    if (tour?.id === '12' && !form.date) {
+      setFormError('Please select a date.');
+      return;
+    }
     setFormError('');
-    const message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nPhone: ${form.phone}\nGuests: ${form.guests}`;
+    let message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nPhone: ${form.phone}\nGuests: ${form.guests}`;
+    if (tour?.id === '12' && form.date) {
+      message += `\nDate: ${form.date}`;
+    }
     const encodedMessage = encodeURIComponent(message);
     window.open(`http://wa.me/201507000720?text=${encodedMessage}`, '_blank');
     setShowModal(false);
@@ -361,6 +369,53 @@ const TourDetails = () => {
                   </button>
                 </div>
               </div>
+              {tour?.id === '12' && (
+                <div>
+                  <label className="block text-gray-700 font-medium mb-3">Select Date</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className={`flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 group ${
+                      form.date === '18 December' 
+                        ? 'border-orange-500 bg-orange-50 shadow-md' 
+                        : 'border-gray-200 hover:border-orange-400 hover:bg-orange-50'
+                    }`}>
+                      <input
+                        type="radio"
+                        name="date"
+                        value="18 December"
+                        checked={form.date === '18 December'}
+                        onChange={handleFormChange}
+                        className="w-5 h-5 text-orange-500 border-gray-300 focus:ring-orange-500 focus:ring-2"
+                        required
+                      />
+                      <span className={`ml-3 font-medium ${
+                        form.date === '18 December' 
+                          ? 'text-orange-600 font-semibold' 
+                          : 'text-gray-700 group-hover:text-orange-600'
+                      }`}>18 December</span>
+                    </label>
+                    <label className={`flex items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 group ${
+                      form.date === '28 January' 
+                        ? 'border-orange-500 bg-orange-50 shadow-md' 
+                        : 'border-gray-200 hover:border-orange-400 hover:bg-orange-50'
+                    }`}>
+                      <input
+                        type="radio"
+                        name="date"
+                        value="28 January"
+                        checked={form.date === '28 January'}
+                        onChange={handleFormChange}
+                        className="w-5 h-5 text-orange-500 border-gray-300 focus:ring-orange-500 focus:ring-2"
+                        required
+                      />
+                      <span className={`ml-3 font-medium ${
+                        form.date === '28 January' 
+                          ? 'text-orange-600 font-semibold' 
+                          : 'text-gray-700 group-hover:text-orange-600'
+                      }`}>28 January</span>
+                    </label>
+                  </div>
+                </div>
+              )}
               {formError && <div className="text-red-500 text-sm text-center">{formError}</div>}
               <button
                 type="submit"
