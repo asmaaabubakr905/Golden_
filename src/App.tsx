@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
+import BottomNav from './components/BottomNav';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
@@ -14,7 +15,7 @@ function App() {
       <ScrollToTop />
       <div className="min-h-screen bg-white">
         <Header />
-        <main>
+        <main className="pb-20 lg:pb-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/tours" element={<Tours />} />
@@ -22,6 +23,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
+        <BottomNav />
         <Footer />
       </div>
     </Router>

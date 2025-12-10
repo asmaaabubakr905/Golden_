@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaFacebookF, FaInstagram, FaBars, FaTimes } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 import logo from '../assets/Logoo2.png';
 
 const Header = () => {
   const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -14,14 +13,6 @@ const Header = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
 
   return (
     <header className="fixed w-full top-0 left-0 z-50 bg-white/80 backdrop-blur shadow-sm transition-all duration-300">
@@ -55,15 +46,6 @@ const Header = () => {
 
         {/* Desktop Social + Book Now */}
         <div className="hidden sm:flex items-center space-x-3 lg:space-x-4">
-          {/* <a
-            href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-8 h-8 lg:w-9 lg:h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white text-orange-500 transition"
-            aria-label="Facebook"
-          >
-            <FaFacebookF size={16} />
-          </a> */}
           <a
             href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
             target="_blank"
@@ -80,70 +62,7 @@ const Header = () => {
             Book Now
           </Link>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className="lg:hidden p-2 rounded-md hover:bg-gray-100 transition"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-        </button>
       </nav>
-
-      {/* Mobile Menu */}
-      <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'} overflow-hidden bg-white/95 backdrop-blur border-t border-gray-200`}>
-        <div className="px-4 py-4 space-y-4">
-          {/* Mobile Navigation Links */}
-          <ul className="space-y-3">
-            {navLinks.map((item) => (
-              <li key={item.name}>
-                <Link
-                  to={item.href}
-                  onClick={closeMenu}
-                  className={`block py-2 px-3 rounded-md font-medium transition ${isActive(item.href)
-                      ? 'text-orange-500 bg-orange-50'
-                      : 'text-gray-700 hover:text-orange-500 hover:bg-gray-50'
-                    }`}
-                >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {/* Mobile Social + Book Now */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-            <div className="flex items-center space-x-3">
-              {/* <a
-                href="https://www.facebook.com/share/1BqnbCHoTA/?mibextid=wwXIfr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white text-orange-500 transition"
-                aria-label="Facebook"
-              >
-                <FaFacebookF size={18} />
-              </a> */}
-              <a
-                href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white text-orange-500 transition"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={18} />
-              </a>
-            </div>
-            <Link
-              to="/tours"
-              onClick={closeMenu}
-              className="bg-orange-500 text-white px-6 py-2 rounded-full shadow font-bold text-base hover:bg-orange-600 transition"
-            >
-              Book Now
-            </Link>
-          </div>
-        </div>
-      </div>
     </header>
   );
 };

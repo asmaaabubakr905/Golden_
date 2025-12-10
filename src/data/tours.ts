@@ -578,6 +578,8 @@ export const tours: Tour[] = [
       '',
       'Day 4',
       'Breakfast',
+      'Luxor Hot Air Balloon (optional)',
+      'Abu Simbel visit (optional)',
       'Check-out',
       'Drop-off at train station',
       'Back to Cairo'
