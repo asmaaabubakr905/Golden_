@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // اختر رحلة واحدة من كل مدينة رئيسية
 const featuredTours: Tour[] = [
-  getToursByCity('Aswan')[0],
+  getToursByCity('Aswan')[0], // Will be newest tour since Aswan tours are reversed
   getToursByCity('Cairo')[0],
   getToursByCity('Luxor')[0],
   getToursByCity('Alexandria')[0],

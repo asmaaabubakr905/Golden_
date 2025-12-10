@@ -44,6 +44,19 @@ const Header = () => {
           </ul>
         </div>
 
+        {/* Mobile Instagram Icon Only */}
+        <div className="flex sm:hidden items-center">
+          <a
+            href="https://www.instagram.com/goldentours.eg?igsh=MW52aHFqNGliMmh6Mg=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-orange-500 hover:text-white text-orange-500 transition"
+            aria-label="Instagram"
+          >
+            <FaInstagram size={16} />
+          </a>
+        </div>
+
         {/* Desktop Social + Book Now */}
         <div className="hidden sm:flex items-center space-x-3 lg:space-x-4">
           <a
@@ -55,12 +68,14 @@ const Header = () => {
           >
             <FaInstagram size={16} />
           </a>
-          <Link
-            to="/tours"
+          <a
+            href="http://wa.me/201507000720"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-orange-500 text-white px-4 py-2 lg:px-6 lg:py-2 rounded-full shadow font-bold text-sm lg:text-base hover:bg-orange-600 transition"
           >
             Book Now
-          </Link>
+          </a>
         </div>
       </nav>
     </header>

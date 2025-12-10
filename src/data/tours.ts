@@ -610,8 +610,14 @@ export const tours: Tour[] = [
 export const cities = ['All', 'Cairo', 'Alexandria', 'Luxor', 'Aswan'];
 
 export const getFeaturedTours = () => tours.filter(tour => tour.featured);
-export const getToursByCity = (city: string) => 
-  city === 'All' ? tours : tours.filter(tour => tour.city === city);
+export const getToursByCity = (city: string) => {
+  let result = city === 'All' ? tours : tours.filter(tour => tour.city === city);
+  // Reverse order for Aswan tours so newest appear first
+  if (city === 'Aswan') {
+    result = [...result].reverse();
+  }
+  return result;
+};
 export const getTourBySlug = (slug: string) =>
   tours.find(tour => getTourSlug(tour) === slug || tour.id === slug);
 
