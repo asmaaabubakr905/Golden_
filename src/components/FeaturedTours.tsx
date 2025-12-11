@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Clock, Star, Users, ArrowRight, Heart, Calendar, Award } from 'lucide-react';
+import { MapPin, Clock, Star, Users, ArrowRight, Share2, Calendar, Award, Check } from 'lucide-react';
 import { getToursByCity, Tour, getTourSlug } from '../data/tours';
 import { Link } from 'react-router-dom';
 
@@ -12,8 +12,46 @@ const featuredTours: Tour[] = [
 ].filter(Boolean) as Tour[];
 
 const TourCard = ({ tour }: { tour: Tour }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [shareSuccess, setShareSuccess] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleShare = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const tourUrl = `${window.location.origin}/tour/${getTourSlug(tour)}`;
+    const shareData = {
+      title: tour.title,
+      text: tour.description,
+      url: tourUrl,
+    };
+
+    try {
+      // Try Web Share API first (mobile)
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+      } else {
+        // Fallback: Copy to clipboard
+        await navigator.clipboard.writeText(tourUrl);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+      }
+    } catch (error) {
+      // User cancelled or error occurred
+      if (error instanceof Error && error.name !== 'AbortError') {
+        // Fallback: Copy to clipboard if share failed
+        try {
+          await navigator.clipboard.writeText(tourUrl);
+          setShareSuccess(true);
+          setTimeout(() => setShareSuccess(false), 2000);
+        } catch (clipboardError) {
+          console.error('Failed to copy to clipboard:', clipboardError);
+        }
+      }
+    }
+  };
 
   return (
     <div 
@@ -29,16 +67,17 @@ const TourCard = ({ tour }: { tour: Tour }) => {
         </div>
       )}
       
-      {/* Like Button */}
+      {/* Share Button */}
       <button
-        onClick={() => setIsLiked(!isLiked)}
-        className="absolute top-4 right-4 w-10 h-10 bg-white bg-opacity-90 backdrop-blur-sm rounded-full flex items-center justify-center z-20 hover:bg-opacity-100 transition-all duration-300 group/heart"
+        onClick={handleShare}
+        className="absolute top-4 right-4 w-10 h-10 bg-white bg-opacity-90 backdrop-blur-sm rounded-full flex items-center justify-center z-20 hover:bg-opacity-100 transition-all duration-300"
+        aria-label="Share tour"
       >
-        <Heart 
-          className={`w-5 h-5 transition-all duration-300 ${
-            isLiked ? 'text-red-500 fill-current' : 'text-gray-600 group-hover/heart:text-red-500'
-          }`} 
-        />
+        {shareSuccess ? (
+          <Check className="w-5 h-5 text-green-500" />
+        ) : (
+          <Share2 className="w-5 h-5 text-gray-600 hover:text-blue-500 transition-colors" />
+        )}
       </button>
 
       {/* Image Section */}

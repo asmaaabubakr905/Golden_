@@ -302,18 +302,20 @@ const TourDetails = () => {
 
       {/* Booking Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-gradient-to-br from-white via-orange-50 to-amber-50 rounded-3xl shadow-2xl w-full max-w-md p-8 relative animate-fadeIn border border-orange-100">
-            <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-orange-500 transition-colors"
-              onClick={() => setShowModal(false)}
-              aria-label="Close"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <h2 className="text-2xl font-bold text-orange-500 mb-2 text-center">Book This Tour</h2>
-            <p className="text-gray-600 text-center mb-6">Fill in your details and we will contact you on WhatsApp.</p>
-            <form onSubmit={handleFormSubmit} className="space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="bg-gradient-to-br from-white via-orange-50 to-amber-50 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col relative animate-fadeIn border border-orange-100">
+            <div className="flex-shrink-0 p-6 pb-4">
+              <button
+                className="absolute top-4 right-4 text-gray-400 hover:text-orange-500 transition-colors z-10 bg-white rounded-full p-1 shadow-sm"
+                onClick={() => setShowModal(false)}
+                aria-label="Close"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <h2 className="text-2xl font-bold text-orange-500 mb-2 text-center pr-8">Book This Tour</h2>
+              <p className="text-gray-600 text-center mb-4">Fill in your details and we will contact you on WhatsApp.</p>
+            </div>
+            <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto px-6 pb-6 space-y-4 min-h-0">
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Tour</label>
                 <input

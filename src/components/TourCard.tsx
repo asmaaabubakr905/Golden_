@@ -1,24 +1,52 @@
-import React from 'react';
-import { MapPin, Clock, Star, Users, Heart, Share2, ArrowRight, Sparkles } from 'lucide-react';
-import { getTourSlug } from '../data/tours';
+import React, { useState } from 'react';
+import { MapPin, Clock, Star, Users, Share2, ArrowRight, Sparkles, Check } from 'lucide-react';
+import { getTourSlug, Tour } from '../data/tours';
 
 interface TourCardProps {
-  tour: {
-    id: string;
-    title: string;
-    description: string;
-    image: string;
-    price: number;
-    duration: string;
-    location: string;
-    rating: number;
-    maxGuests: number;
-    featured?: boolean;
-    special?: boolean;
-  };
+  tour: Tour;
 }
 
 const TourCard: React.FC<TourCardProps> = ({ tour }) => {
+  const [shareSuccess, setShareSuccess] = useState(false);
+
+  const handleShare = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const tourUrl = `${window.location.origin}/tour/${getTourSlug(tour)}`;
+    const shareData = {
+      title: tour.title,
+      text: tour.description,
+      url: tourUrl,
+    };
+
+    try {
+      // Try Web Share API first (mobile)
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+      } else {
+        // Fallback: Copy to clipboard
+        await navigator.clipboard.writeText(tourUrl);
+        setShareSuccess(true);
+        setTimeout(() => setShareSuccess(false), 2000);
+      }
+    } catch (error) {
+      // User cancelled or error occurred
+      if (error instanceof Error && error.name !== 'AbortError') {
+        // Fallback: Copy to clipboard if share failed
+        try {
+          await navigator.clipboard.writeText(tourUrl);
+          setShareSuccess(true);
+          setTimeout(() => setShareSuccess(false), 2000);
+        } catch (clipboardError) {
+          console.error('Failed to copy to clipboard:', clipboardError);
+        }
+      }
+    }
+  };
+
   return (
     <div className="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-orange-200 transform hover:-translate-y-2">
       {/* Gradient Overlay Background */}
@@ -36,11 +64,16 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
       {/* Action Buttons */}
       <div className="absolute top-4 right-4 z-20 flex space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-        <button className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
-          <Heart className="w-4 h-4 text-gray-600 hover:text-red-500 transition-colors" />
-        </button>
-        <button className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
-          <Share2 className="w-4 h-4 text-gray-600 hover:text-blue-500 transition-colors" />
+        <button 
+          onClick={handleShare}
+          className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white hover:scale-110 transition-all duration-200 relative"
+          aria-label="Share tour"
+        >
+          {shareSuccess ? (
+            <Check className="w-4 h-4 text-green-500" />
+          ) : (
+            <Share2 className="w-4 h-4 text-gray-600 hover:text-blue-500 transition-colors" />
+          )}
         </button>
       </div>
 
