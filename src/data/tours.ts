@@ -603,7 +603,23 @@ export const tours: Tour[] = [
       'Kayaking',
       'Tips'
     ],
-    fullDescription: 'Nuba, located in Upper Egypt, is an enchanting destination for its rich cultural heritage and stunning natural landscapes. Discover the magic of Nubia and the grandeur of Abu Simbel — a journey through ancient temples, vibrant culture, and timeless landscapes along the Nile. Highlights include Philae Temple, visiting Nubian houses to watch crocodiles, Heissa Island, sunset from a secret spot, exploring local markets, Nubian Galabeya party, hidden gems, Abu Hawa Mountain hike, and shopping. The trip runs on 31/12 with New Year’s celebrations on board the Dahabya.'
+    fullDescription: 'Nuba, located in Upper Egypt, is an enchanting destination for its rich cultural heritage and stunning natural landscapes. Discover the magic of Nubia and the grandeur of Abu Simbel — a journey through ancient temples, vibrant culture, and timeless landscapes along the Nile. Highlights include Philae Temple, visiting Nubian houses to watch crocodiles, Heissa Island, sunset from a secret spot, exploring local markets, Nubian Galabeya party, hidden gems, Abu Hawa Mountain hike, and shopping. The trip runs on 31/12 with New Year\'s celebrations on board the Dahabya.',
+    galleryImages: [
+      galleryImg1,
+      galleryImg2,
+      galleryImg3,
+      galleryImg4,
+      galleryImg5,
+      galleryImg6,
+      galleryImg7,
+      galleryImg8,
+      galleryImg9,
+      galleryImg10,
+      galleryImg11,
+      galleryImg12,
+      galleryImg13,
+      galleryImg14
+    ]
   },
 ];
 
