@@ -10,6 +10,8 @@ const TourDetails = () => {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', guests: '1', date: '' });
   const [formError, setFormError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showCelebration, setShowCelebration] = useState(false);
   
@@ -107,7 +109,7 @@ const TourDetails = () => {
     });
   }, [maxGuests]);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.phone || !form.guests) {
       setFormError('Please fill in all fields.');
@@ -119,13 +121,64 @@ const TourDetails = () => {
       return;
     }
     setFormError('');
-    let message = `Hello!\nI want to book the following tour:\n\nTour: ${tour.title}\nName: ${form.name}\nPhone: ${form.phone}\nGuests: ${form.guests}`;
-    if (tour?.id === '12' && form.date) {
-      message += `\nDate: ${form.date}`;
+    setIsSubmitting(true);
+
+    try {
+      const dataToSend = {
+        tour: tour.title,
+        name: form.name,
+        phone: form.phone,
+        guests: form.guests,
+        selectDate: tour?.id === '12' ? form.date : ''
+      };
+
+      // Log data being sent for debugging
+      console.log('Sending booking data to Google Sheets:', dataToSend);
+
+      // Replace with your Google Apps Script Web App URL
+      const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxauqea6-954TQEewDYlN4XNLXCI0rkTeKW__PJcgSKr_r3u9NAHgU6YKwWPo3o2PilCg/exec';
+
+      // Send POST request using FormData to avoid CORS preflight issues
+      // FormData doesn't trigger preflight requests, making it work seamlessly with Google Apps Script
+      const formData = new FormData();
+      formData.append('tour', dataToSend.tour);
+      formData.append('name', dataToSend.name);
+      formData.append('phone', dataToSend.phone);
+      formData.append('guests', dataToSend.guests);
+      formData.append('selectDate', dataToSend.selectDate);
+
+      const response = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        body: formData
+        // Don't set Content-Type header - browser will set it automatically with boundary for FormData
+      });
+
+      // Parse response
+      const result = await response.json();
+
+      // Check if request was successful
+      if (result.success) {
+        console.log('Booking submitted successfully:', result);
+        setSubmitSuccess(true);
+        setIsSubmitting(false);
+        
+        // Reset form after 2 seconds and close modal
+        setTimeout(() => {
+          setShowModal(false);
+          setSubmitSuccess(false);
+          setForm({ name: '', phone: '', guests: '1', date: '' });
+        }, 2000);
+      } else {
+        // Server returned error
+        console.error('Server error:', result.error);
+        setFormError(result.message || 'Failed to submit booking. Please try again.');
+        setIsSubmitting(false);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setFormError('Failed to submit booking. Please check your connection and try again.');
+      setIsSubmitting(false);
     }
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`http://wa.me/201507000720?text=${encodedMessage}`, '_blank');
-    setShowModal(false);
   };
 
   return (
@@ -302,19 +355,46 @@ const TourDetails = () => {
 
       {/* Booking Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="bg-gradient-to-br from-white via-orange-50 to-amber-50 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col relative animate-fadeIn border border-orange-100">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+          onClick={() => {
+            setShowModal(false);
+            setSubmitSuccess(false);
+            setFormError('');
+            setForm({ name: '', phone: '', guests: '1', date: '' });
+          }}
+        >
+          <div 
+            className="bg-gradient-to-br from-white via-orange-50 to-amber-50 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col relative animate-fadeIn border border-orange-100"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex-shrink-0 p-6 pb-4">
               <button
                 className="absolute top-4 right-4 text-gray-400 hover:text-orange-500 transition-colors z-10 bg-white rounded-full p-1 shadow-sm"
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setSubmitSuccess(false);
+                  setFormError('');
+                  setForm({ name: '', phone: '', guests: '1', date: '' });
+                }}
                 aria-label="Close"
               >
                 <X className="w-6 h-6" />
               </button>
               <h2 className="text-2xl font-bold text-orange-500 mb-2 text-center pr-8">Book This Tour</h2>
-              <p className="text-gray-600 text-center mb-4">Fill in your details and we will contact you on WhatsApp.</p>
+              <p className="text-gray-600 text-center mb-4">Fill in your details and we will contact you soon.</p>
             </div>
+            {submitSuccess ? (
+              <div className="flex-1 flex items-center justify-center px-6 pb-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-green-600 mb-2">Booking Submitted!</h3>
+                  <p className="text-gray-600">We've received your booking request and will contact you soon.</p>
+                </div>
+              </div>
+            ) : (
             <form onSubmit={handleFormSubmit} className="flex-1 overflow-y-auto px-6 pb-6 space-y-4 min-h-0">
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Tour</label>
@@ -421,9 +501,17 @@ const TourDetails = () => {
               {formError && <div className="text-red-500 text-sm text-center">{formError}</div>}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold text-lg shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all mt-2"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold text-lg shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all mt-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                Send Booking via WhatsApp
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit Booking'
+                )}
               </button>
               <a
                 href="https://ipn.eg/S/amrabouzied7/instapay/6QCON8"
@@ -434,6 +522,7 @@ const TourDetails = () => {
                 Pay via InstaPay
               </a>
             </form>
+            )}
           </div>
         </div>
       )}
